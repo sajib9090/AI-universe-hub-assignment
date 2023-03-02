@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
-<body>
+<body onload="showFeatures()">
     <main class="container">
        <section>
            <div class="text-center">
@@ -37,7 +37,46 @@
                 </div>
               </div>
             </div> -->
-          </div>
+        </div>
+        <div class="text-center">
+            <button class="my-5 btn btn-danger text-white py-2">See More</button>
+        </div>
+       </section>
+
+       <!-- modal -->
+
+       <section>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <!-- <h1 class="modal-title fs-5" id="exampleModalLabel"></h1> -->
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="details-info-modal" class="px-3">
+                        <div class="row">
+                            <div style="height: 60vh;" class="col-6">
+                                <div style="height: 50vh;" class="border">
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div style="height: 50vh;" class="border">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    
+                    </div>
+                    <div class="">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
        </section>
     </main>
     <!-- javascript -->
