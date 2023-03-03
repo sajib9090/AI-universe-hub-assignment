@@ -43,7 +43,7 @@ const displayFeatures = (features) => {
 const featuresAdd = features => {
   let featureHTML = '';
   for(let value of features){
-    featureHTML += `<p class="fs-6"> ${value}</p>`
+    featureHTML += `<p class="fs-6">${value}</p>`;
   }
   return featureHTML;
 };
@@ -57,38 +57,84 @@ const detailsInfo = (id) => {
 
 const displayDetails = (data) => {
 
-  console.log(data.pricing)
+  // console.log(data)
+  const {description, image_link, accuracy, input_output_examples} = data;
+  // console.log(data.features)
+  const featuresObj = data.features;
+  const featuresObjValue = Object.values(featuresObj);
+  const featureNames = featuresObjValue.map(obj => obj.feature_name);
+  // console.log(featuresObjValue)
+  // console.log(featureNames)
   const modalBody = document.getElementById('modal-body');
   modalBody.innerHTML = '';
   const createDiv = document.createElement('div');
-  createDiv.classList.add('row')
+  createDiv.classList.add('row', 'p-3')
   createDiv.innerHTML = `
    <div class="col-12 col-md-6 p-3">
-      <div class="border rounded">
-       <h4>${data.description}</h4>
+      <div class="border rounded bg-danger-subtle">
+      <div class="p-3">
+      <h4>${description}</h4>
+     </div>
+     <div class="row p-3 text-center">
+        <div class="col-4">
+          <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-success-emphasis fw-bold">
+           <p class="p-0 m-0">${data.pricing[0].price}</p>
+           <p class="p-0 m-0">${data.pricing[0].plan}</p>
+          </div>
+        </div>
+        <div class="col-4">
+          <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-warning fw-bold">
+          <p class="p-0 m-0">${data.pricing[1].price}</p>
+          <p class="p-0 m-0">${data.pricing[1].plan}</p>
+          </div>
+        </div>
+        <div class="col-4">
+          <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-danger fw-bold">
+          <p class="p-0 m-0">${data.pricing[2].price}</p>
+          <p class="p-0 m-0">${data.pricing[2].plan}</p>
+          </div>
+        </div>
+     </div>    
+     <div class="row p-3">
+        <div class="col-6">
+          <div>
+            <h4>Features</h4>
+            ${modalFeaturesAdd(featureNames)}
+          </div>
+        </div> 
+        <div class="col-6">
+          <div>
+            <h4>Integrations</h4>
+          </div>
+        </div> 
+     </div> 
       </div>
-      <div class="row">
-         <div class="col-4">
-           <div class="border">
-            
-           </div>
-         </div>
-         <div class="col-4">
-           <div class="border">
-           </div>
-         </div>
-         <div class="col-4">
-           <div class="border">
-           </div>
-         </div>
-      </div>
+      
    </div>
    <div class="col-12 col-md-6 p-3">
       <div class="border rounded">
-       <img class="w-100 p-3 rounded" src="${data.image_link[0]}">
+       <img class="w-100 p-3 rounded" src="${image_link[0]}">
+       <div class="accuracy position-relative">
+       <p class="btn btn-danger py-1">${accuracy.score * 100 <= 0 ? "0" : accuracy.score * 100}% accuracy found</p>
+       </div>
+       <div class="p-3">
+         <h4 class="text-center">${input_output_examples == null ?'Not Found' : input_output_examples[0].input}</h4>
+         <p class="text-center">${input_output_examples.output == "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "" : input_output_examples[0].output}</p>
+       </div>
       </div>
    </div>
   `
   modalBody.appendChild(createDiv);
 }
+
+const modalFeaturesAdd = featureNames => {
+  let featureObjHTML = '';
+  for(let featureName of featureNames){
+    featureObjHTML += `<li>${featureName}</li>`;
+    // console.log(featureName)
+  }
+  return featureObjHTML;
+};
+
+
 

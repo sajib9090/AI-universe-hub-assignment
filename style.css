@@ -6,3 +6,15 @@
     padding: 0;
     box-sizing: border-box;
 }
+.accuracy{
+    top: -300px;
+    right: -62%;
+}
+
+@media (max-width: 576px) {
+    .accuracy{
+        top: -200px;
+        right: -200px;
+    }
+    
+}
