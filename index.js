@@ -58,8 +58,8 @@ const detailsInfo = (id) => {
 const displayDetails = (data) => {
 
   // console.log(data)
-  const {description, image_link, accuracy, input_output_examples} = data;
-  // console.log(data.features)
+  const {description, image_link, accuracy, input_output_examples, integrations, pricing} = data;
+  console.log(integrations)
   const featuresObj = data.features;
   const featuresObjValue = Object.values(featuresObj);
   const featureNames = featuresObjValue.map(obj => obj.feature_name);
@@ -78,20 +78,20 @@ const displayDetails = (data) => {
      <div class="row p-3 text-center">
         <div class="col-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-success-emphasis fw-bold">
-           <p class="p-0 m-0">${data.pricing[0].price}</p>
-           <p class="p-0 m-0">${data.pricing[0].plan}</p>
+           <p class="p-0 m-0">${pricing[0].price}</p>
+           <p class="p-0 m-0">${pricing[0].plan}</p>
           </div>
         </div>
         <div class="col-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-warning fw-bold">
-          <p class="p-0 m-0">${data.pricing[1].price}</p>
-          <p class="p-0 m-0">${data.pricing[1].plan}</p>
+          <p class="p-0 m-0">${pricing[1].price}</p>
+          <p class="p-0 m-0">${pricing[1].plan}</p>
           </div>
         </div>
         <div class="col-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-danger fw-bold">
-          <p class="p-0 m-0">${data.pricing[2].price}</p>
-          <p class="p-0 m-0">${data.pricing[2].plan}</p>
+          <p class="p-0 m-0">${pricing[2].price}</p>
+          <p class="p-0 m-0">${pricing[2].plan}</p>
           </div>
         </div>
      </div>    
@@ -105,6 +105,7 @@ const displayDetails = (data) => {
         <div class="col-6">
           <div>
             <h4>Integrations</h4>
+            ${modalIntegrationsAdd(integrations)}
           </div>
         </div> 
      </div> 
@@ -127,6 +128,7 @@ const displayDetails = (data) => {
   modalBody.appendChild(createDiv);
 }
 
+// modal features
 const modalFeaturesAdd = featureNames => {
   let featureObjHTML = '';
   for(let featureName of featureNames){
@@ -136,5 +138,15 @@ const modalFeaturesAdd = featureNames => {
   return featureObjHTML;
 };
 
+// modal integrations
+
+const modalIntegrationsAdd = integrations => {
+  let integrationsHTML = '';
+  for(let integration of integrations){
+    integrationsHTML += `<li>${integration}</li>`;
+    // console.log(featureName)
+  }
+  return integrationsHTML;
+};
 
 
