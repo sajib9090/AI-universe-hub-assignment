@@ -3,7 +3,8 @@ const showFeatures = () => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
       fetch (url)
         .then((response) => response.json())
-        .then((data => displayFeatures(data.data.tools)))
+        .then((data => displayFeatures(data.data.tools)));
+        loader(true);
 }
 
 
@@ -37,7 +38,8 @@ const displayFeatures = (features) => {
       </div>
         `
         featuresContainer.appendChild(createDiv)
-    })
+    });
+    loader(false);
 }
 
 const featuresAdd = features => {
@@ -52,14 +54,15 @@ const detailsInfo = (id) => {
   const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`
     fetch (url)
       .then((response => response.json()))
-      .then((data => displayDetails(data.data)))
+      .then((data => displayDetails(data.data)));
+      loader(true);
 }
 
 const displayDetails = (data) => {
 
   // console.log(data)
   const {description, image_link, accuracy, input_output_examples, integrations, pricing} = data;
-  console.log(integrations)
+  
   const featuresObj = data.features;
   const featuresObjValue = Object.values(featuresObj);
   const featureNames = featuresObjValue.map(obj => obj.feature_name);
@@ -78,7 +81,7 @@ const displayDetails = (data) => {
      <div class="row p-3 text-center">
         <div class="col-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-success-emphasis fw-bold">
-           <p class="p-0 m-0">${pricing[0].price}</p>
+           <p class="p-0 m-0">${pricing[0].price == 0 ? ' No cost' : pricing[0].price}</p>
            <p class="p-0 m-0">${pricing[0].plan}</p>
           </div>
         </div>
@@ -126,13 +129,14 @@ const displayDetails = (data) => {
    </div>
   `
   modalBody.appendChild(createDiv);
+  loader(false);
 }
 
 // modal features
 const modalFeaturesAdd = featureNames => {
   let featureObjHTML = '';
   for(let featureName of featureNames){
-    featureObjHTML += `<li>${featureName}</li>`;
+    featureObjHTML += `<li class="text-secondary">${featureName}</li>`;
     // console.log(featureName)
   }
   return featureObjHTML;
@@ -143,10 +147,22 @@ const modalFeaturesAdd = featureNames => {
 const modalIntegrationsAdd = integrations => {
   let integrationsHTML = '';
   for(let integration of integrations){
-    integrationsHTML += `<li>${integration}</li>`;
+    integrationsHTML += `<li class="text-secondary">${integration}</li>`;
     // console.log(featureName)
   }
   return integrationsHTML;
 };
 
 
+// loader
+
+const loader = (isLoading) => {
+  const loadSection = document.getElementById('load-section');
+  if(isLoading == true){
+      loadSection.classList.remove('d-none')
+  }
+  else{
+      loadSection.classList.add('d-none')
+  }
+  
+}
