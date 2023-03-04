@@ -1,26 +1,26 @@
 
-const showFeatures = () => {
+const showFeatures = (dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
       fetch (url)
         .then((response) => response.json())
-        .then((data => displayFeatures(data.data.tools)));
+        .then((data => displayFeatures(data.data.tools, dataLimit)));
         loader(true);
 }
 
 
-const displayFeatures = (features) => {
+const displayFeatures = (features, dataLimit) => {
     // console.log(Features)
     const featuresContainer = document.getElementById('display-features-container');
+    const btnAll = document.getElementById('btnAll');
+    if(dataLimit && features.length > 6){
+      features = features.slice(0, 6);
+      btnAll.classList.remove('d-none')
 
-    // const seeMoreBtn = document.getElementById('see-more-btn');
-    // if(features.length > 6){
-    //   features = features.slice(0, 6);
-      
-    //   seeMoreBtn.classList.remove('d-none')
-    // }
-    // else{
-    //   seeMoreBtn.classList.add('d-none')
-    // }
+    }
+    else{
+      btnAll.classList.add('d-none')
+    }
+
     
     features.forEach((singleFeature) => {
         // console.log(singleFeature)
@@ -80,7 +80,7 @@ const displayDetails = (data) => {
   const featuresObjValue = Object.values(featuresObj);
   const featureNames = featuresObjValue.map(obj => obj.feature_name);
   // console.log(featuresObjValue)
-  console.log(pricing)
+  
   
   const modalBody = document.getElementById('modal-body');
   modalBody.innerHTML = '';
@@ -142,7 +142,16 @@ const displayDetails = (data) => {
   loader(false);
 }
 
+const checkAccuracy = (accuracy) => {
+  const accuracyDiv = document.querySelector('.accuracy');
+  const accuracyText = accuracyDiv.querySelector('p');
 
+  if (accuracy === 0) {
+    accuracyDiv.style.display = 'none';
+  } else {
+    accuracyText.textContent = `${accuracy.score * 100}% accuracy found`;
+  }
+};
 // pricing-1
 
 const pricingDisplay1 = (pricing) => {
@@ -257,6 +266,7 @@ const loader = (isLoading) => {
 
 //
 
-// document.getElementById('btnAll').addEventListener('click', function(){
-//   displayFeatures()
-// })
+document.getElementById('see-more-btn').addEventListener('click', function(){
+  showFeatures()
+})
+showFeatures(6)
