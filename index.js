@@ -148,8 +148,8 @@ const inpOut = (input_output_examples) => {
   if (input_output_examples != null) { // check if input_output_examples is not null
     for(let i = 0; i < 1; i++){
       const unit = input_output_examples[i];
-      const input = unit.input === "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "" : unit.input;
-      const output = unit.output === "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "" : unit.output;
+      const input = unit.input === "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "coming soon.." : unit.input;
+      const output = unit.output === "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "coming soon" : unit.output;
       inpOutHTML += `<h4 class="text-center">${input}</h4>
                      <p class="text-secondary text-center">${output}</p>`;
     }
@@ -172,9 +172,12 @@ const modalFeaturesAdd = featureNames => {
 
 const modalIntegrationsAdd = integrations => {
   let integrationsHTML = '';
-  for(let integration of integrations){
-    integrationsHTML += `<li class="text-secondary">${integration}</li>`;
-    // console.log(featureName)
+  if (integrations != null) {
+    for(let integration of integrations){
+      integrationsHTML += `<li class="text-secondary">${integration}</li>`;
+    }
+  } else {
+    integrationsHTML = '<li class="text-secondary">Not Available right now</li>';
   }
   return integrationsHTML;
 };
