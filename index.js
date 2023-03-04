@@ -1,4 +1,4 @@
-let count = 0;
+
 const showFeatures = () => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
       fetch (url)
@@ -55,8 +55,10 @@ const displayFeatures = (features) => {
 
 const featuresAdd = features => {
   let featureHTML = '';
+  let counter = 1;
   for(let value of features){
-    featureHTML += `<p class="fs-6">${value}</p>`;
+    featureHTML += `<p class="fs-6 text-secondary">${counter} . ${value}</p>`;
+    counter ++;
   }
   return featureHTML;
 };
@@ -78,7 +80,7 @@ const displayDetails = (data) => {
   const featuresObjValue = Object.values(featuresObj);
   const featureNames = featuresObjValue.map(obj => obj.feature_name);
   // console.log(featuresObjValue)
-  console.log(input_output_examples)
+  console.log(pricing)
   
   const modalBody = document.getElementById('modal-body');
   modalBody.innerHTML = '';
@@ -91,30 +93,30 @@ const displayDetails = (data) => {
       <h4>${description}</h4>
      </div>
      <div class="row p-3 text-center">
-        <div class="col-4">
+        <div class="col-6 col-md-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-success-emphasis fw-bold">
-           
+          ${pricingDisplay1(pricing)}
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-6 col-md-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-warning fw-bold">
-         
+           ${pricingDisplay2(pricing)}
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-12 col-md-4 mt-2 mt-md-0">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-danger fw-bold">
-          
+           ${pricingDisplay3(pricing)}
           </div>
         </div>
      </div>    
      <div class="row p-3">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
           <div>
             <h4>Features</h4>
             ${modalFeaturesAdd(featureNames)}
           </div>
         </div> 
-        <div class="col-6">
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
           <div>
             <h4>Integrations</h4>
             ${modalIntegrationsAdd(integrations)}
@@ -141,11 +143,67 @@ const displayDetails = (data) => {
 }
 
 
+// pricing-1
 
+const pricingDisplay1 = (pricing) => {
+  let priceHTML = '';
+  if (pricing != null) {
+    for (let i = 0; i < 1; i++) {
+      const priceValue = pricing[i];
+      let priceText = priceValue.price == "0" ? 'no cost' : priceValue.price;
+      priceHTML += `
+        <p class="m-0 p-0">${priceText}</p>
+        <p class="m-0 p-0">${priceValue.plan}</p>
+      `;
+    }
+  } else {
+    priceHTML = 'Unavailable';
+  }
+  return priceHTML;
+};
+
+
+// pricing-2
+
+const pricingDisplay2 = (pricing) => {
+  let priceHTML = '';
+  if (pricing != null) {
+    for (let i = 1; i < 2; i++) {
+      const priceValue = pricing[i];
+      let priceText = priceValue.price ? priceValue.price : 'no cost';
+      priceHTML += `
+        <p class="m-0 p-0">${priceText}</p>
+        <p class="m-0 p-0">${priceValue.plan}</p>
+      `;
+    }
+  } else {
+    priceHTML = 'Unavailable';
+  }
+  return priceHTML;
+};
+
+// pricing3
+
+const pricingDisplay3 = (pricing) => {
+  let priceHTML = '';
+  if (pricing != null) {
+    for (let i = 2; i < 3; i++) {
+      const priceValue = pricing[i];
+      let priceText = priceValue.price ? priceValue.price : 'no cost';
+      priceHTML += `
+        <p class="m-0 p-0">${priceText}</p>
+        <p class="m-0 p-0">${priceValue.plan}</p>
+      `;
+    }
+  } else {
+    priceHTML = 'Unavailable';
+  }
+  return priceHTML;
+};
 // input output null error value
 const inpOut = (input_output_examples) => {
   let inpOutHTML = '';
-  if (input_output_examples != null) { // check if input_output_examples is not null
+  if (input_output_examples != null) {
     for(let i = 0; i < 1; i++){
       const unit = input_output_examples[i];
       const input = unit.input === "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "coming soon.." : unit.input;
@@ -177,7 +235,7 @@ const modalIntegrationsAdd = integrations => {
       integrationsHTML += `<li class="text-secondary">${integration}</li>`;
     }
   } else {
-    integrationsHTML = '<li class="text-secondary">Not Available right now</li>';
+    integrationsHTML = '<li class="text-secondary">Coming soon...</li>';
   }
   return integrationsHTML;
 };
