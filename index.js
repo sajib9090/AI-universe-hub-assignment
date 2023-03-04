@@ -11,6 +11,17 @@ const showFeatures = () => {
 const displayFeatures = (features) => {
     // console.log(Features)
     const featuresContainer = document.getElementById('display-features-container');
+
+    // const seeMoreBtn = document.getElementById('see-more-btn');
+    // if(features.length > 6){
+    //   features = features.slice(0, 6);
+      
+    //   seeMoreBtn.classList.remove('d-none')
+    // }
+    // else{
+    //   seeMoreBtn.classList.add('d-none')
+    // }
+    
     features.forEach((singleFeature) => {
         // console.log(singleFeature)
         
@@ -67,7 +78,8 @@ const displayDetails = (data) => {
   const featuresObjValue = Object.values(featuresObj);
   const featureNames = featuresObjValue.map(obj => obj.feature_name);
   // console.log(featuresObjValue)
-  // console.log(featureNames)
+  console.log(input_output_examples)
+  
   const modalBody = document.getElementById('modal-body');
   modalBody.innerHTML = '';
   const createDiv = document.createElement('div');
@@ -81,20 +93,17 @@ const displayDetails = (data) => {
      <div class="row p-3 text-center">
         <div class="col-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-success-emphasis fw-bold">
-           <p class="p-0 m-0">${pricing[0].price == 0 ? ' No cost' : pricing[0].price}</p>
-           <p class="p-0 m-0">${pricing[0].plan}</p>
+           
           </div>
         </div>
         <div class="col-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-warning fw-bold">
-          <p class="p-0 m-0">${pricing[1].price}</p>
-          <p class="p-0 m-0">${pricing[1].plan}</p>
+         
           </div>
         </div>
         <div class="col-4">
           <div style="min-height: 100px;" class="d-flex flex-column align-items-center justify-content-center rounded bg-white text-danger fw-bold">
-          <p class="p-0 m-0">${pricing[2].price}</p>
-          <p class="p-0 m-0">${pricing[2].plan}</p>
+          
           </div>
         </div>
      </div>    
@@ -122,8 +131,7 @@ const displayDetails = (data) => {
        <p class="btn btn-danger py-1">${accuracy.score * 100 <= 0 ? "0" : accuracy.score * 100}% accuracy found</p>
        </div>
        <div class="p-3">
-         <h4 class="text-center">${input_output_examples == null ?'Not Found' : input_output_examples[0].input}</h4>
-         <p class="text-center">${input_output_examples.output == "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "" : input_output_examples[0].output}</p>
+         ${inpOut(input_output_examples)}
        </div>
       </div>
    </div>
@@ -131,6 +139,24 @@ const displayDetails = (data) => {
   modalBody.appendChild(createDiv);
   loader(false);
 }
+
+
+
+// input output null error value
+const inpOut = (input_output_examples) => {
+  let inpOutHTML = '';
+  if (input_output_examples != null) { // check if input_output_examples is not null
+    for(let i = 0; i < 1; i++){
+      const unit = input_output_examples[i];
+      const input = unit.input === "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "" : unit.input;
+      const output = unit.output === "function reverseString(str) {\n return str.split('').reverse().join('');\n}" ? "" : unit.output;
+      inpOutHTML += `<h4 class="text-center">${input}</h4>
+                     <p class="text-secondary text-center">${output}</p>`;
+    }
+  }
+  return inpOutHTML;
+}
+
 
 // modal features
 const modalFeaturesAdd = featureNames => {
@@ -166,3 +192,10 @@ const loader = (isLoading) => {
   }
   
 }
+
+
+//
+
+// document.getElementById('btnAll').addEventListener('click', function(){
+//   displayFeatures()
+// })
