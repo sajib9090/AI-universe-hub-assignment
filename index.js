@@ -23,7 +23,7 @@ const displayFeatures = (features, dataLimit) => {
 
     
     features.forEach((singleFeature) => {
-        // console.log(singleFeature)
+        // console.log(singleFeature.published_in)
         
         const {image, features, name, published_in, id} = singleFeature;
         const createDiv = document.createElement('div');
@@ -267,6 +267,6 @@ const loader = (isLoading) => {
 //
 
 document.getElementById('see-more-btn').addEventListener('click', function(){
-  showFeatures()
+  showFeatures();
 })
 showFeatures(6)
